@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import re, unicodedata,requests
 from theaters_search.theaters.class_theaters import Theater
 
 class Cinepolis(Theater):
@@ -39,7 +38,7 @@ class Cinepolis(Theater):
                 if name not in self.locations[city]:
                     self.locations[city][name] =  {}
                 
-                self.locations[city][name][mall] = horarios
+                self.locations[city][name][mall] = horarios[1:]
 
         
 
