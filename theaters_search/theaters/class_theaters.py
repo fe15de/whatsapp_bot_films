@@ -1,6 +1,7 @@
 from selenium.webdriver.firefox.options import Options
 from selenium import webdriver
 from abc import ABC, abstractmethod
+import unicodedata,re
 
 class Theater(ABC):
     def __init__(self, name):
@@ -22,12 +23,12 @@ class Theater(ABC):
     def search_showtimes_film(self, films,film, city):
         pass
 
-    def verify(self,url_names):
+    def verify(self,url_names,city):
         #----------------------------------------------
         #       url_names has to be a list
         #----------------------------------------------
         for url_name in url_names:
-            if url_name in self.films.values():
+            if url_name in self.films[city].values():
                 return url_name
             
         return False
@@ -39,3 +40,13 @@ class Theater(ABC):
         driver.get(url)
 
         return driver
+    
+    def normalize_name(self,name):
+        name = unicodedata.normalize("NFD", name)
+        name = "".join(ch for ch in name if unicodedata.category(ch) != "Mn")
+        name = name.replace("‘", "").replace("’", "").replace("“", '').replace("”", '').replace('–','-')
+        
+        return name
+    
+    def url_name(self,name):
+        return re.sub(r'[:\s-]+', '-', name)

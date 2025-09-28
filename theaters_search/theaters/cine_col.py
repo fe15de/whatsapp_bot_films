@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import re, unicodedata,requests
+import re,requests
 from theaters_search.theaters.class_theaters import Theater
 
 class CineCol(Theater):
@@ -15,6 +15,10 @@ class CineCol(Theater):
         response = requests.get(url)
         soup = BeautifulSoup(response.text, "html.parser")
         all_films = soup.select(".movie-item")
+        
+        if city not in self.films:
+            self.films[city] = {}
+            self.locations[city] = {}
 
         for film in all_films:
             us_name = film.select_one('.movie-item__title').get_text(strip=True)
@@ -22,18 +26,15 @@ class CineCol(Theater):
             #---------------------------------------------------------------------------
             #   fixing name so that can the function time can be searched by name
             #--------------------------------------------------------------------------    
-
             name = re.sub(r"Título en español:\s*(.+)",r'\1', name)
-            name = unicodedata.normalize("NFD", name)
-            name = "".join(ch for ch in name if unicodedata.category(ch) != "Mn")
-            us_name = us_name.replace("‘", "").replace("’", "").replace("“", '').replace("”", '')
-            url_name = re.sub(r'[:\s-]+', '-', us_name)
-            self.films[name] = url_name
+            name= self.normalize_name(name)
+            url_name = self.url_name(us_name)
+            self.films[city][name] = url_name
     
 
     def search_showtimes_film(self,films, film,city):
         url_names = films[film]#.url_name
-        url_name = self.verify(url_names)
+        url_name = self.verify(url_names,city)
 
         if not url_name:
             return f'No hay funciones de {film} en {self.name}'
@@ -46,21 +47,21 @@ class CineCol(Theater):
         driver = self.get_driver(url)
 
         try:
-            locations = {}
             WebDriverWait(driver,1).until(EC.presence_of_element_located((By.CLASS_NAME,'show-times-collapse__title')))
             soup = BeautifulSoup(driver.page_source, 'html.parser')
             malls = soup.select('.show-times-collapse__title')
             times = soup.select('.show-times-group__times')
-        
-            for idx,place in enumerate(malls):
-                place = place.get_text(strip=True)
+            if city not in self.locations[city]:
+                    self.locations[city][film] =  {}
+
+            for idx,mall in enumerate(malls):
+                mall = mall.get_text(strip=True)
                 time = re.sub(r'(AM|PM)(?!\s)', r'\1 ', times[idx].get_text(strip=True))
-                print(f'{place}\nHorarios: {time}')
-                locations[place] = time
+                print(f'{mall}\nHorarios: {time}')
+                self.locations[city][film][mall] = time
 
         finally:
             driver.quit()
-            return locations
 
 
 
