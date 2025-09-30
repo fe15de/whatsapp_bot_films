@@ -1,10 +1,4 @@
-from dict_theaters import *
-from bs4 import BeautifulSoup
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import re,requests
-from theaters_search.theaters.class_theaters import Theater
+from theaters_search.libraries import *
 
 class CineCol(Theater):
     def __init__(self):

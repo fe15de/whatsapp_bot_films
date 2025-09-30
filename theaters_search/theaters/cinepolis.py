@@ -1,9 +1,4 @@
-from dict_theaters import *
-from bs4 import BeautifulSoup
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from theaters_search.theaters.class_theaters import Theater
+from theaters_search.libraries import *
 
 class Cinepolis(Theater):
     def __init__(self):
@@ -19,10 +14,14 @@ class Cinepolis(Theater):
         if city not in self.films:
             self.films[city] = {}
             self.locations[city] = {}
-
+        #-------------------------------------------------------------------
+        #               Getting the name of the malls
+        #-------------------------------------------------------------------
         for complejo in soup.find_all("div", class_="divComplejo"):
             mall = complejo.find("h2").get_text(strip=True).replace(" ?", "")
-            
+            #-------------------------------------------------------------------
+            #               Getting the name of the films and showtimes
+            #-------------------------------------------------------------------
             for film in complejo.find_all("article", class_="tituloPelicula"):
                 name =film.find("a", class_="datalayer-movie").get_text(strip=True)
                 name= self.normalize_name(name)
@@ -30,18 +29,19 @@ class Cinepolis(Theater):
                 self.films[city][name] = url_name
 
                 section = film.find('div',class_='descripcion')
-                horarios = [
+                showtimes = [
                     t.get_text(strip=True)
                     for t in section.find_all("a", class_="ng-binding")
                 ]
-                #print(mall,name,horarios)
                 if name not in self.locations[city]:
                     self.locations[city][name] =  {}
                 
-                self.locations[city][name][mall] = horarios[1:]
+                self.locations[city][name][mall] = showtimes[1:]
 
         
 
     def search_showtimes_film(self, films, film, city):
         if film in self.films[city]:
-            print(self.locations[city][film])
+            return self.locations[city][film]
+        else:
+            return f'No hay funciones de {film} en {self.name}'

@@ -2,7 +2,7 @@ import requests
 from whatsapp.template import *
 from api import all_films, search_film
 from model.film import Film
-from dict_theaters import theaters_by_city
+from theaters_search.dict_theaters import theaters_by_city
 
 # --------------------------------------------------------------
 #                       Send Cities 

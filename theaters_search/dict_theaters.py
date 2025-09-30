@@ -48,3 +48,32 @@ theaters_url = {
     'cinepolis' : ['https://cinepolis.com.co/cartelera/{city}-colombia/',''], # -> In Theaters link gives the showtimes
     'royal_films' : ['https://cinemasroyalfilms.com/cartelera/{city}', ''], # -> In Theaters link gives the link to the showtimes
 }
+cities_id_royal = {
+    "Armenia": "1015",
+    "Barranquilla": "6",
+    "Bogotá": "1026",
+    "Bucaramanga": "1013",
+    "Buenaventura": "1023",
+    "Buga": "1021",
+    "Cali": "1020",
+    "Cartagena": "1043",
+    "Cartago": "1034",
+    "Cúcuta": "1032",
+    "Dosquebradas": "1031",
+    "Girardot": "1017",
+    "Guajira": "1036",
+    "Ibagué": "1027",
+    "Ibagué": "1027",
+    "Itagüí": "1012",
+    "Madellín": "1025",
+    "Montería": "1035",
+    "Mosquera": "1028",
+    "Neiva": "1018",
+    "Pasto": "1019",
+    "Pereira": "1024",
+    "Popayán": "1037",
+    "Santo Tomás": "1011",
+    "Santa Marta": "1010",
+    "Villavicencio": "1042",
+    "Yumbo": "1043"
+}
