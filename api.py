@@ -15,7 +15,8 @@ royal_films = RoyalFilms()
 royal_films.get_films('Bogotá')
 
 cine_col = CineCol()
-cine_col.get_films('bogota')
+cine_col.get_films('Bogota')
+print(cine_col.films)
 
 cinemark = Cinemark()
 cinemark.get_films('bogota')
@@ -24,7 +25,7 @@ cinepolis = Cinepolis()
 cinepolis.get_films('bogota')
  
 films = {
-    **cine_col.films['bogota'],
+    **cine_col.films['Bogota'],
     **cinemark.films['bogota'],
     **cinepolis.films['bogota'],
     **royal_films.films['Bogotá'],
@@ -45,4 +46,5 @@ print('CINEMARK')
 print(cinemark.locations['bogota']['Demon Slayer: Kimetsu no Yaiba - Castillo infinito'])
 
 print('CINE COLOMBIA')
-cine_col.search_showtimes_film(films,'Demon Slayer: Kimetsu no Yaiba - Castillo infinito','bogota')
+cine_col.search_showtimes_film(films,'Demon Slayer: Kimetsu no Yaiba - Castillo infinito','Bogota')
+print(cine_col.locations['Bogota']['Demon Slayer: Kimetsu no Yaiba - Castillo infinito'])

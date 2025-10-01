@@ -22,47 +22,34 @@ class CineCol(Theater):
             #--------------------------------------------------------------------------    
             name = re.sub(r"Título en español:\s*(.+)",r'\1', name)
             name= self.normalize_name(name)
-            url_name = self.url_name(us_name)
-            self.films[city][name] = url_name
-    
+            url_name = re.sub(r'[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ ]+', '', name)
+            url_name = re.sub(r'\s+', '+', url_name)
+            
+            #url_name = self.url_name(name)
+            self.films[city][name] = url_name.upper()
 
-    def search_showtimes_film(self,films, film,city):
+        
+    def search_showtimes_film(self, films, film, city):
         url_names = films[film]#.url_name
         url_name = self.verify(url_names,city)
 
         if not url_name:
             return f'No hay funciones de {film} en {self.name}'
-        
-        url = theaters_url[self.name][1].format(city=city,url_name=url_name)
-        #---------------------------------------------------------------------
-        #       since the show times and locations load with js file, 
-        #   it has to wait to the content to load so i had to use selenium 
-        #---------------------------------------------------------------------
-        driver = self.get_driver(url)
-
-        try:
-            WebDriverWait(driver,1).until(EC.presence_of_element_located((By.CLASS_NAME,'show-times-collapse__title')))
-            soup = BeautifulSoup(driver.page_source, 'html.parser')
-            malls = soup.select('.show-times-collapse__title')
-            times = soup.select('.show-times-group__times')
-            if city not in self.locations[city]:
-                    self.locations[city][film] =  {}
-
-            for idx,mall in enumerate(malls):
-                mall = mall.get_text(strip=True)
-                time = re.sub(r'(AM|PM)(?!\s)', r'\1 ', times[idx].get_text(strip=True))
-                print(f'{mall}\nHorarios: {time}')
-                self.locations[city][film][mall] = time
-
-        finally:
-            driver.quit()
-
-
-
-#-------------------------------------------------------------------------------------------------------------
-#                                     Filter of the showtimes 
-#   <div class="column is-12">
-#   date-filter :is-loading="isLoading" @change="dateChanged" first-function-date="2025-09-10"></date-filter>
-#   </div>
-#
-#-------------------------------------------------------------------------------------------------------------
+        #----------------------------------------------------------------------------------------
+        #                   Use the api instead of scraping (faster)
+        #----------------------------------------------------------------------------------------
+        today_date = date.today().strftime("%Y-%m-%d")
+        url = f'https://funciones.cinecolombia.com/cineco/get-performances-by-params?name={url_name}&date={today_date}&city={city[:3]}'
+        resp = requests.get(url)
+        data = resp.json()
+        if film not in self.locations[city]:
+                self.locations[city][film] =  {}
+        for location in data:
+            mall =  location['Name']
+            self.locations[city][film][mall] = []
+            showtimes = location['showtimes']
+            for type_format in showtimes:
+                showtimes = type_format['performances']
+                for showtime in showtimes:
+                    time = datetime.fromisoformat(showtime['DateTime'])
+                    self.locations[city][film][mall].append(time.strftime("%H:%M"))

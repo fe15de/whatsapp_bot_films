@@ -1,5 +1,4 @@
 from theaters_search.libraries import *
-from datetime import date
 class Cinemark(Theater):
     def __init__(self):
         super().__init__('cinemark')

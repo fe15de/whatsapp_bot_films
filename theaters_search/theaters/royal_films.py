@@ -1,6 +1,5 @@
 from theaters_search.libraries import *
 from theaters_search.dict_theaters import cities_id_royal
-from datetime import datetime
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
