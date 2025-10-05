@@ -6,13 +6,10 @@ class Cinemark(Theater):
     def get_films(self, city):
 
         url = theaters_url[self.name][0].format(city=city)
-        driver = self.get_driver(url)
+        soup = self.get_driver(url,'billboard-movies')
         #-------------------------------------------------------
         #               Wait javascript to load
         #-------------------------------------------------------
-        WebDriverWait(driver,1).until(EC.presence_of_element_located((By.CLASS_NAME,'billboard-movies')))
-        soup = BeautifulSoup(driver.page_source, 'html.parser')
-        driver.quit()
         section = soup.find("section", class_="billboard-movies")
         cards = section.find_all("div", class_="grid-movie__card")
         

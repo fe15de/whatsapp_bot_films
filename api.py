@@ -16,7 +16,6 @@ royal_films.get_films('Bogotá')
 
 cine_col = CineCol()
 cine_col.get_films('Bogota')
-print(cine_col.films)
 
 cinemark = Cinemark()
 cinemark.get_films('bogota')

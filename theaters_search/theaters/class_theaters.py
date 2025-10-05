@@ -2,6 +2,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium import webdriver
 from abc import ABC, abstractmethod
 import unicodedata,re
+from theaters_search.libraries import *
 
 class Theater(ABC):
     def __init__(self, name):
@@ -33,13 +34,16 @@ class Theater(ABC):
             
         return False
     
-    def get_driver(self,url):
+    def get_driver(self,url,class_to_search):
         firefox_options= Options()
         firefox_options.add_argument("--headless")
         driver = webdriver.Firefox(options=firefox_options)
         driver.get(url)
-
-        return driver
+        WebDriverWait(driver,1).until(EC.presence_of_element_located((By.CLASS_NAME,class_to_search)))
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        driver.quit()
+        
+        return soup
     
     def normalize_name(self,name):
         name = unicodedata.normalize("NFD", name)

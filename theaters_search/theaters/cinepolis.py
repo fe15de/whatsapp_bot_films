@@ -6,10 +6,7 @@ class Cinepolis(Theater):
 
     def get_films(self, city):
         url = theaters_url[self.name][0].format(city=city)
-        driver = self.get_driver(url)
-        WebDriverWait(driver,1).until(EC.presence_of_element_located((By.CLASS_NAME,'listaCarteleraHorario')))
-        soup = BeautifulSoup(driver.page_source, 'html.parser')
-        driver.quit()
+        soup = self.get_driver(url,'listaCarteleraHorario')
 
         if city not in self.films:
             self.films[city] = {}
