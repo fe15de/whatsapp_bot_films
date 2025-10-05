@@ -38,10 +38,12 @@ class Theater(ABC):
         firefox_options= Options()
         firefox_options.add_argument("--headless")
         driver = webdriver.Firefox(options=firefox_options)
-        driver.get(url)
-        WebDriverWait(driver,1).until(EC.presence_of_element_located((By.CLASS_NAME,class_to_search)))
-        soup = BeautifulSoup(driver.page_source, 'html.parser')
-        driver.quit()
+        try:
+            driver.get(url)
+            WebDriverWait(driver,1).until(EC.presence_of_element_located((By.CLASS_NAME,class_to_search)))
+            soup = BeautifulSoup(driver.page_source, 'html.parser')
+        finally:
+            driver.quit()
         
         return soup
     

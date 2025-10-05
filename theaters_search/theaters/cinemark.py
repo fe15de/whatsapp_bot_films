@@ -54,7 +54,7 @@ class Cinemark(Theater):
             for fmt in theater["Format"]:
                 for session in fmt["Sessions"]:
                     if session["IsVisible"]:
-                        msg +=f"{session['Showtime'][:5]} {session['SeatsAvailable']} asientos" 
+                        msg +=f"{session['Showtime'][:5]} {session['SeatsAvailable']} asientos\n" 
             if film not in self.locations[city]:
                     self.locations[city][film] =  {}
             
