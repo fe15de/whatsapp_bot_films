@@ -37,7 +37,7 @@ def home():
 
 @app.get('/films')
 def get_films(city : str):
-    all = all_films(city)
+    films = all_films(city)
     
     for film in all:
         films[film] = Film(url_name=all[film],showtimes= {'':''})

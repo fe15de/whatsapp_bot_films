@@ -2,7 +2,7 @@ import requests
 from whatsapp.template import *
 from api import all_films, search_film
 from model.film import Film
-from theaters_search.dict_theaters import theaters_by_city
+from theaters_search.dict_theaters import cities_with_theaters
 
 # --------------------------------------------------------------
 #                       Send Cities 
@@ -14,7 +14,7 @@ def send_whatsapp_message(sender):
     data['to'] = sender
     data['interactive']['body']['text'] = 'Please select a city from the following:'
     send_cities = data['interactive']['action']['sections'][0]['rows']
-    cities = theaters_by_city.keys()
+    cities = cities_with_theaters
 
     for id,city in enumerate(cities,start=1):
         send_cities.append({

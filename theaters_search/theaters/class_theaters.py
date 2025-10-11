@@ -3,6 +3,7 @@ from selenium import webdriver
 from abc import ABC, abstractmethod
 import unicodedata,re
 from theaters_search.libraries import *
+from theaters_search.dict_theaters import theaters_by_city
 
 class Theater(ABC):
     def __init__(self, name):
@@ -56,3 +57,14 @@ class Theater(ABC):
     
     def url_name(self,name):
         return re.sub(r'[:\s-]+', '-', name)
+    
+    def message_locations(self,city,film):
+        msg = ''
+        try:    
+            for mall in self.locations[city][film]:
+                showtimes = ' '.join(self.locations[city][film][mall])
+                msg += f'{mall}\n{showtimes}\n'
+            return msg
+        except:
+            if city in theaters_by_city[self.name]:
+                return f'No hay funciones de {film} en **{self.name}**\n'
