@@ -39,7 +39,7 @@ def search_film(films,film,city):
 
     cine_col.search_showtimes_film(films,'Demon Slayer: Kimetsu no Yaiba - Castillo infinito','Bogota')
     cine_col.locations['Bogota']['Demon Slayer: Kimetsu no Yaiba - Castillo infinito','Bogota']
-
+#
 # royal_films = RoyalFilms()
 # royal_films.get_films('Bogotá')
 #
