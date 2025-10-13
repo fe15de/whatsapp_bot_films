@@ -29,12 +29,12 @@ class CineCol(Theater):
             self.films[city][name] = url_name.upper()
 
         
-    def search_showtimes_film(self, films, film, city):
-        url_names = films[film]#.url_name
+    def search_showtimes_film(self, film_name, film, city):
+        url_names = film.url_name
         url_name = self.verify(url_names,city)
 
         if not url_name:
-            return f'No hay funciones de {film} en {self.name}'
+            return f'No hay funciones de {film_name} en {self.name}'
         #----------------------------------------------------------------------------------------
         #                   Use the api instead of scraping (faster)
         #----------------------------------------------------------------------------------------
@@ -42,14 +42,14 @@ class CineCol(Theater):
         url = f'https://funciones.cinecolombia.com/cineco/get-performances-by-params?name={url_name}&date={today_date}&city={city[:3]}'
         resp = requests.get(url)
         data = resp.json()
-        if film not in self.locations[city]:
-                self.locations[city][film] =  {}
+        if film_name not in self.locations[city]:
+                self.locations[city][film_name] =  {}
         for location in data:
             mall =  location['Name']
-            self.locations[city][film][mall] = []
+            self.locations[city][film_name][mall] = []
             showtimes = location['showtimes']
             for type_format in showtimes:
                 showtimes = type_format['performances']
                 for showtime in showtimes:
                     time = datetime.fromisoformat(showtime['DateTime'])
-                    self.locations[city][film][mall].append(time.strftime("%H:%M"))
+                    self.locations[city][film_name][mall].append(time.strftime("%H:%M"))

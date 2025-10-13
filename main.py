@@ -1,6 +1,7 @@
 import hashlib, hmac, logging, os, json
 
 from fastapi import FastAPI,HTTPException,Request
+from fastapi.responses import PlainTextResponse
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from fastapi.responses import JSONResponse
@@ -69,7 +70,7 @@ async def verify(request: Request):
     if mode and token:
         if mode == "subscribe" and token == VERIFY_TOKEN:
             logging.info("WEBHOOK_VERIFIED")
-            return int(challenge)
+            return PlainTextResponse(challenge)
         else:
             logging.info("VERIFICATION_FAILED")
             raise HTTPException(status_code=403, detail="Verification failed")
@@ -90,11 +91,9 @@ async def webhook_post(request: Request):
     signature = signature_header[7:] if signature_header.startswith("sha256=") else ""
     raw_body = await request.body()
     payload_str = raw_body.decode("utf-8")
-
     if not validate_signature(payload_str, signature):
         logging.warning("Signature verification failed!")
         raise HTTPException(status_code=403, detail="Invalid signature")
-
     try:
         body = await request.json()
         value = body.get("entry", [{}])[0].get("changes", [{}])[0].get("value", {})

@@ -5,7 +5,8 @@ class Cinepolis(Theater):
         super().__init__('cinepolis')
 
     def get_films(self, city):
-        url = theaters_url[self.name][0].format(city=city)
+        city_url = self.normalize_name(city)
+        url = theaters_url[self.name][0].format(city=city_url)
         soup = self.get_driver(url,'listaCarteleraHorario')
 
         if city not in self.films:
@@ -37,8 +38,8 @@ class Cinepolis(Theater):
 
         
 
-    def search_showtimes_film(self, films, film, city):
-        if film in self.films[city]:
-            return self.locations[city][film]
+    def search_showtimes_film(self, film_name, film, city):
+        if film_name in self.films[city]:
+            return self.locations[city][film_name]
         else:
-            return f'No hay funciones de {film} en {self.name}'
+            return f'No hay funciones de {film_name} en {self.name}'

@@ -22,12 +22,13 @@ class RoyalFilms(Theater):
             name= self.normalize_name(film['pelicula']['pelicula_nombre_formato'])
             self.films[city][name] = str(film['pelicula']['pelicula_id'])  
 
-    def search_showtimes_film(self, films, film, city):
-        url_names = films[film]#.url_name
+    def search_showtimes_film(self, film_name, film, city):
+        print(3)
+        url_names = film.url_name
         film_id = self.verify(url_names,city)
         
         if not film_id:
-            return f'No hay funciones de {film} en {self.name}'
+            return f'No hay funciones de {film_name} en {self.name}'
         
         url = f'https://cinemasroyalfilms.com/api/movies/functions/{film_id}/city/{self.city_id}'
         if city not in self.locations:
@@ -40,11 +41,11 @@ class RoyalFilms(Theater):
             time = show['funcion_hora_inicio']
             time = datetime.fromisoformat(time.replace("Z", "+00:00"))
             time = time.strftime("%H:%M")
-            if film not in self.locations[city]:
-                    self.locations[city][film] = {}
+            if film_name not in self.locations[city]:
+                    self.locations[city][film_name] = {}
 
-            if mall not in self.locations[city][film]:
-                self.locations[city][film][mall] = []     
+            if mall not in self.locations[city][film_name]:
+                self.locations[city][film_name][mall] = []     
             
-            self.locations[city][film][mall].append(time)
+            self.locations[city][film_name][mall].append(time)
             

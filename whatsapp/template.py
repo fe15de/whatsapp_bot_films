@@ -12,8 +12,6 @@ RECIPIENT_WAID = os.getenv("RECIPIENT_WAID")
 PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
 VERSION = os.getenv("VERSION")
 APP_ID = os.getenv("APP_ID")
-APP_SECRET = os.getenv("APP_SECRET")
-
 
 # --------------------------------------------------------------
 # List Template WhatsApp message

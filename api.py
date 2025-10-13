@@ -28,18 +28,18 @@ def all_films(city):
     films = group_similar_films(films)
     return films
 
-def search_film(films,film,city):
+def search_film(film_name,film,city):
     msg = ''
     for theater in theaters_by_city:
         if city in theaters_by_city[theater]:
-            theaters_names[theater].search_showtimes_film(films, film, city)
-            msg += theaters_names[theater].message_locations(city,film)
-    print(msg)        
-
-""" print(all_films('Bogotá'))
-search_film('Bogotá') """
-
-films = all_films('Pereira')
-search_film(films,'Un Poeta','Pereira')
+            theaters_names[theater].search_showtimes_film(film_name, film, city)
+            msg += theaters_names[theater].message_locations(city,film_name)
+    return msg
+#------------------------------------------------------------------------
+#                       TESTING IF THE API IS WORKING
+#------------------------------------------------------------------------
+""" films = all_films('Bogotá')
+print(films.keys())
+search_film(films,'Demon Slayer: Kimetsu no Yaiba - Castillo infinito','Bogotá') """
 
     

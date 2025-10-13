@@ -4,8 +4,8 @@ class Cinemark(Theater):
         super().__init__('cinemark')
 
     def get_films(self, city):
-
-        url = theaters_url[self.name][0].format(city=city)
+        city_url = self.normalize_name(city)
+        url = theaters_url[self.name][0].format(city=city_url)
         soup = self.get_driver(url,'billboard-movies')
         #-------------------------------------------------------
         #               Wait javascript to load
@@ -24,12 +24,12 @@ class Cinemark(Theater):
             self.films[city][name] = url_name
     
 
-    def search_showtimes_film(self, films, film, city):
-        url_names = films[film]#.url_name
+    def search_showtimes_film(self, film_name, film, city):
+        url_names = film.url_name
         url_name = self.verify(url_names,city)
         
         if not url_name:
-            return f'No hay funciones de {film} en {self.name}'
+            return f'No hay funciones de {film_name} en {self.name}'
         
         url = theaters_url[self.name][1].format(city=city,url_name=url_name)
         resp = requests.get(url)
@@ -55,7 +55,7 @@ class Cinemark(Theater):
                 for session in fmt["Sessions"]:
                     if session["IsVisible"]:
                         msg +=f"{session['Showtime'][:5]} {session['SeatsAvailable']} asientos\n" 
-            if film not in self.locations[city]:
-                    self.locations[city][film] =  {}
+            if film_name not in self.locations[city]:
+                    self.locations[city][film_name] =  {}
             
-            self.locations[city][film][theater['Name']] = msg
+            self.locations[city][film_name][theater['Name']] = msg

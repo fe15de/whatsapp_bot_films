@@ -14,9 +14,7 @@ def send_whatsapp_message(sender):
     data['to'] = sender
     data['interactive']['body']['text'] = 'Please select a city from the following:'
     send_cities = data['interactive']['action']['sections'][0]['rows']
-    cities = cities_with_theaters
-
-    for id,city in enumerate(cities,start=1):
+    for id,city in enumerate(cities_with_theaters,start=1):
         send_cities.append({
                             "id": id,
                             "title": city,
@@ -48,16 +46,15 @@ def send_films_theaters(sender,message):
         #           The goal is to search films once per week 
         #---------------------------------------------------------------------
 
-        if not films_by_city[city]:
+        if not city in films_by_city:
             films = films_by_city[city] = all_films(city)
         else:
             films = films_by_city[city]
 
-        send_films = data['interactive']['action']['sections'][0]['rows'] 
-        print(films)
+        send_films = data['interactive']['action']['sections'][0]['rows']
         for id,film in enumerate(films,start=1):
-            
-            films_by_city[city][film] = Film(url_name=films[film],showtimes= {'':''})
+
+            films_by_city[city][film] = Film(url_name=films[film],showtimes='')
             send_films.append({
                                 "id": id,
                                 "title": film[:24],
@@ -69,7 +66,6 @@ def send_films_theaters(sender,message):
         
         if send_films:
             requests.post(url, headers=headers, json=data)
-        
         return city
     
     except Exception as ex:
@@ -85,24 +81,24 @@ def send_showtimes(sender,message_sender,city):
         url, headers,data = text_template()
         data['to'] = sender
         message = data['text']['body']
-        film = message_sender['interactive']['list_reply']['description']
-        film = films_by_city[city][film]
+        film_name = message_sender['interactive']['list_reply']['description']
+        film = films_by_city[city][film_name]
+
         #---------------------------------------------------------------------
         #     The goal is to search films showtimes at 00:00 once per day
         #---------------------------------------------------------------------
         
         if not film.showtimes:
-            theaters_times =  search_film(films_by_city[city],film,city)
-            film.showtimes = theaters_times
-        
+            film.showtimes =  search_film(film_name,film,city)
+        """ 
         locations = film.showtimes
-        message = '*SHOWTIMES :*\n'
+        message = ''
         
         for id,location in enumerate(locations):
             message += f'*{id+1} - {location}*\n'
             message += f'Times: {locations[location]}\n'
-            
-        data['text']['body'] = message
+        """    
+        data['text']['body'] = film.showtimes
         requests.post(url, headers=headers, json=data)
 
     except Exception as ex:

@@ -59,12 +59,15 @@ class Theater(ABC):
         return re.sub(r'[:\s-]+', '-', name)
     
     def message_locations(self,city,film):
-        msg = ''
+        msg = f'*{self.name.upper()}*\n'
         try:    
             for mall in self.locations[city][film]:
-                showtimes = ' '.join(self.locations[city][film][mall])
+                if self.name == 'cinemark':
+                    showtimes = ''.join(self.locations[city][film][mall])
+                else:
+                    showtimes = ' '.join(self.locations[city][film][mall])
                 msg += f'{mall}\n{showtimes}\n'
             return msg
         except:
             if city in theaters_by_city[self.name]:
-                return f'No hay funciones de {film} en **{self.name}**\n'
+                return f'*No hay funciones de {film} en {self.name}*\n'
