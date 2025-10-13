@@ -35,6 +35,8 @@ class Cinepolis(Theater):
                     self.locations[city][name] =  {}
                 
                 self.locations[city][name][mall] = showtimes[1:]
+        
+        return name
 
         
 

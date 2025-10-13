@@ -9,7 +9,7 @@ royal_films = RoyalFilms()
 cinepolis = Cinepolis()
 cine_col = CineCol()
 cinemark = Cinemark()
-
+name_film_cinepolis = ''
 theaters_names = {
         "cine_col": cine_col,
         "cinemark": cinemark,
@@ -23,7 +23,10 @@ def all_films(city):
     for theater in theaters_by_city:
         if city in theaters_by_city[theater]:
             theaters_names[theater].get_films(city)
-            films.update(theaters_names[theater].films[city])
+            if theater == 'cinepolis':
+                name_film_cinepolis = films.update(theaters_names[theater].films[city])
+            else:    
+                films.update(theaters_names[theater].films[city])
 
     films = group_similar_films(films)
     return films
@@ -32,7 +35,10 @@ def search_film(film_name,film,city):
     msg = ''
     for theater in theaters_by_city:
         if city in theaters_by_city[theater]:
-            theaters_names[theater].search_showtimes_film(film_name, film, city)
+            if theater == 'cinepolis':
+                theaters_names[theater].search_showtimes_film(name_film_cinepolis, film, city)
+            else:
+                theaters_names[theater].search_showtimes_film(film_name, film, city)
             msg += theaters_names[theater].message_locations(city,film_name)
     return msg
 #------------------------------------------------------------------------
