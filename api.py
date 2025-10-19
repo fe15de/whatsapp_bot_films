@@ -32,15 +32,17 @@ def all_films(city):
     return films
 
 def search_film(film_name,film,city):
-    msg = ''
+    msgs = []
     for theater in theaters_by_city:
+        msg = ''
         if city in theaters_by_city[theater]:
             if theater == 'cinepolis':
                 theaters_names[theater].search_showtimes_film(name_film_cinepolis, film, city)
             else:
                 theaters_names[theater].search_showtimes_film(film_name, film, city)
             msg += theaters_names[theater].message_locations(city,film_name)
-    return msg
+        msgs.append(msg)
+    return msgs
 #------------------------------------------------------------------------
 #                       TESTING IF THE API IS WORKING
 #------------------------------------------------------------------------

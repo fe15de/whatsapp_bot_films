@@ -35,7 +35,7 @@ class Cinemark(Theater):
         resp = requests.get(url)
         soup = BeautifulSoup(resp.text, "html.parser")
         #--------------------------------------------------------------------------
-        #                   Get id of the film to get showtimes
+        #                   Get id of the film  to get showtimes
         # -------------------------------------------------------------------------
         script = soup.find("script", {"id": "__NEXT_DATA__"})
         data = json.loads(script.string)
