@@ -1,4 +1,4 @@
-# whatsapp_bot_films
+# whatsapp bot films
 
 A WhatsApp bot (Python) for checking movie listings in Colombia. It scrapes data from Cine Colombia, Cinepolis, Cinemark, Royal Films, and others, then serves everything through a FastAPI backend so users can query showtimes directly from WhatsApp.
 
@@ -10,10 +10,9 @@ A WhatsApp bot (Python) for checking movie listings in Colombia. It scrapes data
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Endpoints / Commands](#endpoints--commands)
+- [Endpoints](#endpoints--commands)
 - [Security](#security)
 - [Contribution](#contribution)
-- [License](#license)
 
 ## Description
 
@@ -69,16 +68,6 @@ Install dependencies:
 ```sh
 pip install -r requirements.txt
 ```
-
-## Architecture
-
-/theaters_search # Search theaters by city or name
-/remove_duplicates # Deduplication utilities
-/model # Movie, showtime, and theater data models
-/security # Validation and basic security rules
-/whatsapp # WhatsApp webhook and message handling
-api.py # API endpoints
-main.py # Application entrypoint
 
 Configure your WhatsApp webhook to point to your server URL.
 
