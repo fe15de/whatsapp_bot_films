@@ -84,19 +84,11 @@ Configure your WhatsApp webhook to point to your server URL.
 
 Use WhatsApp commands to retrieve movies, theaters, and showtimes.
 
-## Endpoints / Commands
-
-### API Endpoints
+## Endpoints
 
 - `/movies` — returns movie listings
 - `/theaters` — returns available theaters
 - `/showtimes?theater_id={id}` — returns showtimes for a specific theater
-
-### WhatsApp Commands
-
-- `!movies`
-- `!theaters`
-- `!showtimes <theater>`
 
 ## Security
 
