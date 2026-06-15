@@ -50,4 +50,6 @@ def search_film(film_name,film,city):
 # films = all_films('Bogotá')
 # print(films.keys())
 # search_film(films,'Marty Supreme','Bogotá') 
-print(cine_col.get_films('Bogotá'))
+token,films = cine_col.get_films('Pereira')
+print(cine_col.get_film_names(films,token,'Pereira'))
+cine_col.search_showtimes_film('Michael',next(iter(films)),'Pereira',token)

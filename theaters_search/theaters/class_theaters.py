@@ -22,7 +22,7 @@ class Theater(ABC):
     #           Get locations and showtimes 
     #-------------------------------------------------------
     @abstractmethod
-    def search_showtimes_film(self, film_name,film, city):
+    def search_showtimes_film(self, film_name,film, city,token=False):
         pass
 
     def verify(self,url_names,city):

@@ -1,8 +1,8 @@
-# whatsapp bot films
+# whatsapp Scraper films
 
 A WhatsApp bot (Python) for checking movie listings in Colombia. It scrapes data from Cine Colombia, Cinepolis, Cinemark, Royal Films, and others, then serves everything through a FastAPI backend so users can query showtimes directly from WhatsApp.
 
-## 📘 Table of Contents
+## Table of Contents
 
 - [Description](#description)
 - [Features](#features)
