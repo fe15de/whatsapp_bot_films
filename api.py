@@ -1,5 +1,5 @@
 from theaters_search.theaters.cinemark import Cinemark
-from theaters_search.theaters.cine_col import CineCol
+from theaters_search.theaters.cine_col import CineCol 
 from theaters_search.theaters.cinepolis import Cinepolis
 from theaters_search.theaters.royal_films import RoyalFilms
 from remove_duplicates.remove_duplicates import group_similar_films
@@ -27,6 +27,7 @@ def all_films(city):
                 name_film_cinepolis = films.update(theaters_names[theater].films[city])
             else:    
                 films.update(theaters_names[theater].films[city])
+            print(films,theater)
 
     films = group_similar_films(films)
     return films
@@ -46,8 +47,7 @@ def search_film(film_name,film,city):
 #------------------------------------------------------------------------
 #                       TESTING IF THE API IS WORKING
 #------------------------------------------------------------------------
-""" films = all_films('Bogotá')
-print(films.keys())
-search_film(films,'Demon Slayer: Kimetsu no Yaiba - Castillo infinito','Bogotá') """
-
-    
+# films = all_films('Bogotá')
+# print(films.keys())
+# search_film(films,'Marty Supreme','Bogotá') 
+print(cine_col.get_films('Bogotá'))

@@ -6,3 +6,4 @@ from selenium.webdriver.support import expected_conditions as EC
 from theaters_search.theaters.class_theaters import Theater
 import re,requests,json
 from datetime import date , datetime
+from playwright.sync_api import sync_playwright

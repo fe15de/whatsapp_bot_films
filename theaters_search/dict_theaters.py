@@ -72,7 +72,7 @@ theaters_by_city = {
 
 theaters_url = {
     'cinemark' : ['https://www.cinemark.com.co/cartelera/{city}','https://www.cinemark.com.co/cartelera/{city}/{url_name}'],
-    'cine_col' : ['https://www.cinecolombia.com/{city}/cartelera','https://www.cinecolombia.com/{city}/peliculas/{url_name}'],
+    'cine_col' : ['https://www.cinecolombia.com','https://www.cinecolombia.com/{city}/peliculas/{url_name}'],
     'cinepolis' : ['https://cinepolis.com.co/cartelera/{city}-colombia/',''], # -> In Theaters link gives the showtimes
     'royal_films' : ['https://cinemasroyalfilms.com/cartelera/{city}', ''], # -> In Theaters link gives the link to the showtimes
 }
@@ -104,4 +104,42 @@ cities_id_royal = {
     "Santa Marta": "1010",
     "Villavicencio": "1042",
     "Yumbo": "1043"
+}
+cine_colombia_ids = {
+    "Armenia": ["6642"],
+    "Barranquilla": ["7337", "6772"],
+    "Bogotá": [
+        "6871",
+        "6461",
+        "6760",
+        "6493",
+        "6541",
+        "6669",
+        "6501",
+        "6791",
+        "6451",
+        "6754",
+        "6736",
+        "6674",
+        "6431",
+        "6536",
+        "7249",
+        "6427",
+        "6630",
+        "6750",
+        "6659",
+        "7131",
+        "6183"
+    ],
+    "Bucaramanga": ["6836", "6687", "6444", "6858"],
+    "Cali": ["6162", "6742", "6646", "6727", "7011"],
+    "Cartagena": ["6401", "6601", "6605"],
+    "Fusagasugá": ["7214"],
+    "Ibagué": ["6920"],
+    "Manizales": ["6485"],
+    "Medellín": ["6711", "6690", "6411", "6577", "6365", "6192"],
+    "Montería": ["6851"],
+    "Pereira": ["6654"],
+    "Popayán": ["6172"],
+    "Villavicencio": ["6930"]
 }

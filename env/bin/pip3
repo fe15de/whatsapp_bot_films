@@ -1,4 +1,4 @@
-#!/home/fede/Documents/code/whatsapp_bot_films/env/bin/python3
+#!/home/fede/Documents/code/whatsapp_bot_films/env/bin/python
 import sys
 from pip._internal.cli.main import main
 if __name__ == '__main__':

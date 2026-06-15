@@ -1,34 +1,20 @@
 from theaters_search.libraries import *
-
+from theaters_search.dict_theaters import cine_colombia_ids
+    
 class CineCol(Theater):
     def __init__(self):
         super().__init__('cine_col')
 
     def get_films(self, city):
-        url = theaters_url[self.name][0].format(city=city)
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, "html.parser")
-        all_films = soup.select(".movie-item")
-        
-        if city not in self.films:
-            self.films[city] = {}
-            self.locations[city] = {}
+        url = 'https://digital-api.cinecolombia.com/ocapi/v1/film-screening-dates?'
+        url = self.add_ids_to_url(city,url)
+        token = self.get_token()
+        resp = requests.get(url,headers={"Authorization": token})
+        data = resp.json()
+        # data = data['data']
 
-        for film in all_films:
-            us_name = film.select_one('.movie-item__title').get_text(strip=True)
-            name = film.select_one('.movie-item__meta').get_text(strip=True)
-            #---------------------------------------------------------------------------
-            #   fixing name so that can the function time can be searched by name
-            #--------------------------------------------------------------------------    
-            name = re.sub(r"Título en español:\s*(.+)",r'\1', name)
-            name= self.normalize_name(name)
-            url_name = re.sub(r'[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ ]+', '', name)
-            url_name = re.sub(r'\s+', '+', url_name)
-            
-            #url_name = self.url_name(name)
-            self.films[city][name] = url_name.upper()
+        return data 
 
-        
     def search_showtimes_film(self, film_name, film, city):
         url_names = film.url_name
         url_name = self.verify(url_names,city)
@@ -53,3 +39,37 @@ class CineCol(Theater):
                 for showtime in showtimes:
                     time = datetime.fromisoformat(showtime['DateTime'])
                     self.locations[city][film_name][mall].append(time.strftime("%H:%M"))
+    
+    def add_ids_to_url(self,city,url):
+        ids = cine_colombia_ids[city]
+        i = 0
+        while i < len(ids) - 1:
+            url += f'siteIds={ids[i]}&'
+            i += 1
+        url += f'siteIds={ids[i]}'
+        return url
+
+    def get_token(self):
+        captured = {}
+        all_requests = []
+
+        with sync_playwright() as p:
+            browser = p.firefox.launch(headless=True)
+            page = browser.new_page()
+
+            def handle_request(request):
+                all_requests.append(request.url)
+                auth = request.headers.get("authorization")
+                if auth:
+                    if "digital-api" in request.url:
+                        captured["token"] = auth
+
+            page.on("request", handle_request)
+
+            page.goto("https://www.cinecolombia.com/", wait_until="domcontentloaded", timeout=60000)
+            page.wait_for_timeout(10000)
+
+            browser.close()
+
+        return captured.get("token")
+
