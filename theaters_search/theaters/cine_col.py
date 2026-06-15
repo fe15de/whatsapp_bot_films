@@ -51,12 +51,20 @@ class CineCol(Theater):
         url = self.add_ids_to_url(city,url)
         resp = requests.get(url,headers={"Authorization": token})
         data = resp.json()
-
+        
         for show in data['showtimes']:
             time = show['schedule']['startsAt']
             time = datetime.fromisoformat(time).strftime("%H:%M")
-            mall = show['siteId'] 
-            print(f'{cine_colombia_siteids[mall]} a las {time}\n')
+            mall = show['siteId']
+            mall = cine_colombia_siteids[mall]
+
+            if film_name not in self.locations[city]:
+                    self.locations[city][film_name] = {}
+
+            if mall not in self.locations[city][film_name]:
+                self.locations[city][film_name][mall] = []     
+            
+            self.locations[city][film_name][mall].append(time)
 
     def add_ids_to_url(self,city,url):
         ids = cine_colombia_ids[city]
