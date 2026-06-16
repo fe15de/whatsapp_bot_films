@@ -49,8 +49,8 @@ def search_film(film_name,film,city):
 #------------------------------------------------------------------------
 # films = all_films('Bogotá')
 # print(films.keys())
-# search_film(films,'Marty Supreme','Bogotá') 
-token,films = cine_col.get_films('Bogotá')
-cine_col.get_film_names(films,token,'Bogotá')
-cine_col.search_showtimes_film('Michael',next(iter(films)),'Bogotá',token)
+# search_film(films,'Michael','Bogotá') 
+cine_col.get_films('Bogotá')
+cine_col.get_film_names(cine_col.films_ids,'Bogotá')
+cine_col.search_showtimes_film('Michael',next(iter(cine_col.films)),'Bogotá')
 print(cine_col.locations)

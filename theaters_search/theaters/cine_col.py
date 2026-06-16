@@ -4,6 +4,8 @@ from theaters_search.dict_theaters import cine_colombia_ids, cine_colombia_sitei
 class CineCol(Theater):
     def __init__(self):
         super().__init__('cine_col')
+        self.films_ids = {}
+        self.token = self.get_token() 
 
     def get_films(self, city):
         #----------------------------------------------------------------------------------------
@@ -11,21 +13,19 @@ class CineCol(Theater):
         #----------------------------------------------------------------------------------------
         url = 'https://digital-api.cinecolombia.com/ocapi/v1/film-screening-dates?'
         url = self.add_ids_to_url(city,url)
-        token = self.get_token()
-        resp = requests.get(url,headers={"Authorization": token})
+        # token = self.get_token()
+        resp = requests.get(url,headers={"Authorization": self.token})
         data = resp.json()
         data = data['filmScreeningDates'][0]['filmScreenings']
         #----------------------------------------------------------------------------------------
         #                   Get films screenings from today
         #----------------------------------------------------------------------------------------
-        films_ids = {} 
         for film_id in data:
             # films_ids.append(film_id['filmId'])
-            films_ids[film_id['filmId']] = ''
+            self.films_ids[film_id['filmId']] = ''
 
-        return token,films_ids 
 
-    def get_film_names(self,films,token,city):
+    def get_film_names(self,films,city):
         url = 'https://digital-api.cinecolombia.com/ocapi/v1/films/'
         if city not in self.films:
             self.films[city] = {}
@@ -33,14 +33,14 @@ class CineCol(Theater):
         
         for film in films:
             new_url = url + f'{film}'
-            resp = requests.get(new_url,headers={"Authorization": token})
+            resp = requests.get(new_url,headers={"Authorization": self.token})
             data = resp.json()
             name = data['film']['title']['translations'][0]['text']
             # name = data['film']['title']['text'] english name
             self.films[city][name] = film 
 
 
-    def search_showtimes_film(self,film_name,film, city,token):
+    def search_showtimes_film(self,film_name,film, city):
         # url_names = film
         # url_name = self.verify(url_names,city)
         # if not url_name:
@@ -49,7 +49,7 @@ class CineCol(Theater):
         url = 'https://digital-api.cinecolombia.com/ocapi/v1/showtimes/by-business-date/first?'
         url += f'filmIds={self.films[city][film_name]}&'  
         url = self.add_ids_to_url(city,url)
-        resp = requests.get(url,headers={"Authorization": token})
+        resp = requests.get(url,headers={"Authorization": self.token})
         data = resp.json()
         
         for show in data['showtimes']:

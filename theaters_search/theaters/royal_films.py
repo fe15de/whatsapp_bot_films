@@ -23,7 +23,6 @@ class RoyalFilms(Theater):
             self.films[city][name] = str(film['pelicula']['pelicula_id'])  
 
     def search_showtimes_film(self, film_name, film, city):
-        print(3)
         url_names = film.url_name
         film_id = self.verify(url_names,city)
         
@@ -36,6 +35,7 @@ class RoyalFilms(Theater):
         resp = requests.get(url,verify=False)
         data = resp.json()
         data= data['data']
+
         for show in data: 
             mall = show['multicine']['multicine_nombre']
             time = show['funcion_hora_inicio']
