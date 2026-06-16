@@ -11,7 +11,10 @@ class RoyalFilms(Theater):
     def get_films(self, city):
         self.city_id = cities_id_royal[city]
         url = f'https://cinemasroyalfilms.com/api/billboard/city/{self.city_id}'
-        resp = requests.get(url,verify=False)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        }
+        resp = requests.get(url,verify=False,headers=headers)
         data = resp.json()
         data = data['data']
 
@@ -23,7 +26,8 @@ class RoyalFilms(Theater):
             self.films[city][name] = str(film['pelicula']['pelicula_id'])  
 
     def search_showtimes_film(self, film_name, film, city):
-        url_names = film.url_name
+        # url_names = film.url_name
+        url_names = film
         film_id = self.verify(url_names,city)
         
         if not film_id:

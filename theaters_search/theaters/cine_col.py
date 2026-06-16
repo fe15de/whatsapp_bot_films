@@ -21,8 +21,9 @@ class CineCol(Theater):
         #                   Get films screenings from today
         #----------------------------------------------------------------------------------------
         for film_id in data:
-            # films_ids.append(film_id['filmId'])
             self.films_ids[film_id['filmId']] = ''
+
+        self.get_film_names(self.films_ids,city)
 
 
     def get_film_names(self,films,city):
@@ -41,10 +42,10 @@ class CineCol(Theater):
 
 
     def search_showtimes_film(self,film_name,film, city):
-        # url_names = film
-        # url_name = self.verify(url_names,city)
-        # if not url_name:
-        #     return f'No hay funciones de {film_name} en {self.name}'       
+        url_names = film
+        # url_names = film.url_name
+        if not self.films[city][film_name]:
+            return f'No hay funciones de {film_name} en {self.name}'       
 
         url = 'https://digital-api.cinecolombia.com/ocapi/v1/showtimes/by-business-date/first?'
         url += f'filmIds={self.films[city][film_name]}&'  

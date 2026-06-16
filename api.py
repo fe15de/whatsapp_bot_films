@@ -27,7 +27,7 @@ def all_films(city):
                 name_film_cinepolis = films.update(theaters_names[theater].films[city])
             else:    
                 films.update(theaters_names[theater].films[city])
-            print(films,theater)
+            # print(films,theater)
 
     films = group_similar_films(films)
     return films
@@ -47,10 +47,10 @@ def search_film(film_name,film,city):
 #------------------------------------------------------------------------
 #                       TESTING IF THE API IS WORKING
 #------------------------------------------------------------------------
-# films = all_films('Bogotá')
-# print(films.keys())
-# search_film(films,'Michael','Bogotá') 
-cine_col.get_films('Bogotá')
-cine_col.get_film_names(cine_col.films_ids,'Bogotá')
-cine_col.search_showtimes_film('Michael',next(iter(cine_col.films)),'Bogotá')
-print(cine_col.locations)
+films = all_films('Bogotá')
+print(films)
+print(search_film('Michael',films,'Bogotá'))
+# cine_col.get_films('Bogotá')
+# cine_col.get_film_names(cine_col.films_ids,'Bogotá')
+# cine_col.search_showtimes_film('Michael',next(iter(cine_col.films)),'Bogotá')
+# print(cine_col.locations)
