@@ -25,8 +25,8 @@ class Cinemark(Theater):
     
 
     def search_showtimes_film(self, film_name, film, city):
-        # url_names = film.url_name
-        url_names = film
+        url_names = film.url_name
+        # url_names = film
         url_name = self.verify(url_names,city)
         
         if not url_name:

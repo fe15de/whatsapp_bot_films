@@ -26,8 +26,8 @@ class RoyalFilms(Theater):
             self.films[city][name] = str(film['pelicula']['pelicula_id'])  
 
     def search_showtimes_film(self, film_name, film, city):
-        # url_names = film.url_name
-        url_names = film
+        url_names = film.url_name
+        # url_names = film
         film_id = self.verify(url_names,city)
         
         if not film_id:

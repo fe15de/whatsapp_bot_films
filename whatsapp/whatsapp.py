@@ -94,16 +94,5 @@ def send_showtimes(sender,message_sender,city):
                 data['text']['body'] = shotimes_theather
                 requests.post(url, headers=headers, json=data)        
                 data['text']['body'] = ''
-        """ 
-        locations = film.showtimes
-        message = ''
-        
-        for id,location in enumerate(locations):
-            message += f'*{id+1} - {location}*\n'
-            message += f'Times: {locations[location]}\n'
-            
-        data['text']['body'] = film.showtimes
-        requests.post(url, headers=headers, json=data)
-        """
     except Exception as ex:
         print(ex)

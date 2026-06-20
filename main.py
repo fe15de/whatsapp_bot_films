@@ -40,8 +40,8 @@ def home():
 def get_films(city : str):
     films = all_films(city)
     
-    for film in all:
-        films[film] = Film(url_name=all[film],showtimes= {'':''})
+    for film in films:
+        films[film] = Film(url_name=films[film],showtimes= {'':''})
 
     return films
 
