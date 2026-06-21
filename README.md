@@ -1,7 +1,7 @@
 # whatsapp Scraper films
 
 <p style="text-align:center;">
-  <img src="https://cms-api-multiplex.cinecolombia.com/media/xitcxtzb/logo-cc-blanco-01.png" width="75" height="75">
+  <img src="https://cms-api-multiplex.cinecolombia.com/media/xitcxtzb/logo-cc-blanco-01.png">
   <img src="https://www.cinemark.com.co/static/favicon/android-icon-192x192.svg" width="75" height="75">
   <img src="https://static.cinepolis.com/img/logo-icons/icon-144x144.png" width="75" height="75">
   <img src="https://cinemasroyalfilms.com/assets/images/brand/logo-royal-white.svg" width="75" height="75">
