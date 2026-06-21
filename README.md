@@ -3,7 +3,7 @@
 <p style="text-align:center;">
   <img src="https://cms-api-multiplex.cinecolombia.com/media/xitcxtzb/logo-cc-blanco-01.png" width="20%" height="75">
   <img src="https://www.cinemark.com.co/static/favicon/android-icon-192x192.svg" width="20%" height="75">
-  <img src="https://static.cinepolis.com/img/logo-icons/icon-144x144.png" width="20%" height="75">
+  <img src="https://static.cinepolis.com/img/logo-icons/icon-144x144.png" width="144" height="144">
   <img src="https://cinemasroyalfilms.com/assets/images/header/logo-royal-white.svg" width="20%" height="75">
 </p>
 
