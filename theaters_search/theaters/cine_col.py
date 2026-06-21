@@ -75,7 +75,7 @@ class CineCol(Theater):
 
     def request_data(self,url):
         resp = requests.get(url,headers={"Authorization": self.token})
-        resp.status_code == 200:
+        if resp.status_code == 200:
             return resp.json()
         else:
             self.token = self.get_token()
