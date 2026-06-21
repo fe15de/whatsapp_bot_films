@@ -13,8 +13,7 @@ class CineCol(Theater):
         #----------------------------------------------------------------------------------------
         url = 'https://digital-api.cinecolombia.com/ocapi/v1/film-screening-dates?'
         url = self.add_ids_to_url(city,url)
-        resp = requests.get(url,headers={"Authorization": self.token})
-        data = resp.json() if resp.status_code == 200 else  
+        data = self.request_data(url) 
         data = data['filmScreeningDates'][0]['filmScreenings']
         #----------------------------------------------------------------------------------------
         #                   Get films screenings from today
