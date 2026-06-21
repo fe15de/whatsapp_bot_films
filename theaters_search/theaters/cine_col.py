@@ -13,9 +13,8 @@ class CineCol(Theater):
         #----------------------------------------------------------------------------------------
         url = 'https://digital-api.cinecolombia.com/ocapi/v1/film-screening-dates?'
         url = self.add_ids_to_url(city,url)
-        # token = self.get_token()
         resp = requests.get(url,headers={"Authorization": self.token})
-        data = resp.json()
+        data = resp.json() if resp.status_code == 200 else  
         data = data['filmScreeningDates'][0]['filmScreenings']
         #----------------------------------------------------------------------------------------
         #                   Get films screenings from today
@@ -34,8 +33,7 @@ class CineCol(Theater):
         
         for film in films:
             new_url = url + f'{film}'
-            resp = requests.get(new_url,headers={"Authorization": self.token})
-            data = resp.json()
+            data = self.request_data(url) 
             name = data['film']['title']['translations'][0]['text']
             # name = data['film']['title']['text'] english name
             self.films[city][name] = film 
@@ -50,8 +48,7 @@ class CineCol(Theater):
         url = 'https://digital-api.cinecolombia.com/ocapi/v1/showtimes/by-business-date/first?'
         url += f'filmIds={self.films[city][film_name]}&'  
         url = self.add_ids_to_url(city,url)
-        resp = requests.get(url,headers={"Authorization": self.token})
-        data = resp.json()
+        data = self.request_data(url) 
         
         for show in data['showtimes']:
             time = show['schedule']['startsAt']
@@ -75,6 +72,14 @@ class CineCol(Theater):
             i += 1
         url += f'siteIds={ids[i]}'
         return url
+
+    def request_data(self,url):
+        resp = requests.get(url,headers={"Authorization": self.token})
+        resp.status_code == 200:
+            return resp.json()
+        else:
+            self.token = self.get_token()
+            return requests.get(url,headers={"Authorization": self.token}).json()
 
     def get_token(self):
         captured = {}
