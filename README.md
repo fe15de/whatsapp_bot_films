@@ -4,7 +4,7 @@
   <img src="https://cms-api-multiplex.cinecolombia.com/media/xitcxtzb/logo-cc-blanco-01.png" width="20%" height="75">
   <img src="https://www.cinemark.com.co/static/favicon/android-icon-192x192.svg" width="20%" height="75">
   <img src="https://static.cinepolis.com/img/logo-icons/icon-144x144.png" width="75" height="75">
-  <img src="https://cinemasroyalfilms.com/assets/images/header/logo-royal-white.svg" width="20%" height="75">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Royal_Films_logo.svg/3840px-Royal_Films_logo.svg.png" width="20%" height="75">
 </p>
 
 A WhatsApp bot (Python) for checking movie listings in Colombia. It scrapes data from Cine Colombia, Cinepolis, Cinemark, Royal Films, and others, then serves everything through a FastAPI backend so users can query showtimes directly from WhatsApp.
