@@ -1,5 +1,12 @@
 # whatsapp Scraper films
 
+<p style="text-align:center;">
+  <img src="https://www.cinecolombia.com/scripts/dist/favicon/cinecolombia/favicon.ico" width="75" height="75">
+  <img src="https://www.cinemark.com.co/static/favicon/android-icon-192x192.svg" width="75" height="75">
+  <img src="https://static.cinepolis.com/img/logo-icons/icon-144x144.png" width="75" height="75">
+  <img src="https://cinemasroyalfilms.com/assets/images/brand/logo-royal-white.svg" width="75" height="75">
+</p>
+
 A WhatsApp bot (Python) for checking movie listings in Colombia. It scrapes data from Cine Colombia, Cinepolis, Cinemark, Royal Films, and others, then serves everything through a FastAPI backend so users can query showtimes directly from WhatsApp.
 
 ## Table of Contents
