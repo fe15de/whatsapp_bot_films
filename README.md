@@ -1,93 +1,88 @@
-# whatsapp Scraper films
+# 🎬 Colombia Movie Theater API
 
-<p style="text-align:center;">
+<p align="center"> 
   <img src="https://cms-api-multiplex.cinecolombia.com/media/xitcxtzb/logo-cc-blanco-01.png" width="20%" height="75">
   <img src="https://www.cinemark.com.co/static/favicon/android-icon-192x192.svg" width="20%" height="75">
   <img src="https://static.cinepolis.com/img/logo-icons/icon-144x144.png" width="75" height="75">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Royal_Films_logo.svg/3840px-Royal_Films_logo.svg.png" width="20%" height="75">
 </p>
 
-A WhatsApp bot (Python) for checking movie listings in Colombia. It scrapes data from Cine Colombia, Cinepolis, Cinemark, Royal Films, and others, then serves everything through a FastAPI backend so users can query showtimes directly from WhatsApp.
-
-## Table of Contents
-
-- [Description](#description)
-- [Features](#features)
-- [Architecture](#architecture)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Endpoints](#endpoints--commands)
-- [Contribution](#contribution)
-
-## Description
-
-This project provides a WhatsApp bot that delivers movie listings and showtimes from multiple cinema chains in Colombia. It scrapes data from each chain's website and exposes unified movie information through a FastAPI backend.
-
-The goal is simple: make movie discovery less painful than browsing each cinema site individually.
+A Python API that aggregates movie showtimes from all major Colombian cinema chains in real time. Search for what's playing in your city — across Cinemark, CineCol, Cinépolis, and Royal Films — without jumping between four different websites.
 
 ## Features
 
-- Web scraping for movie listings across several cinema chains
-- Internal API implemented with FastAPI
-- WhatsApp integration for receiving queries and sending responses
-- Theater search functionality
-- Duplicate-cleaning utilities
-- Basic security logic
+- **Multi-chain aggregation** — scrapes and merges showtimes from Cinemark, CineCol, Cinépolis, and Royal Films
+- **City-based search** — filter results by city (e.g. Bogotá, Medellín, Cali)
+- **Smart deduplication** — fuzzy matching groups similar film titles across chains (e.g. "Spider-Man" vs "Spider Man") so you see one clean result
+- **Film + showtime lookup** — list all films currently showing, or drill into showtimes and locations for a specific title
 
-## Architecture
+## Tech Stack
 
-Repository structure:
+- **Python 3.14**
+- **FastAPI** — API framework
+- **Selenium** — browser automation for scraping dynamic pages
+- **BeautifulSoup4** — HTML parsing
+- **RapidFuzz** — fuzzy string matching for deduplication
+- **Uvicorn** — ASGI server
 
-- `theaters_search` — search theaters by city or name
-- `remove_duplicates` — utilities for deduplication
-- `model` — data models for theaters, movies, and showtimes
-- `security` — basic validations and access rules
-- `whatsapp` — webhook handling and WhatsApp logic
-- `api.py` — API endpoints
-- `main.py` — application entrypoint
+## Project Structure
 
-## Requirements
-
-- Python 3.x
-- Dependencies from `requirements.txt`
-- Internet connection for scraping
-- WhatsApp webhook credentials and configuration
-
-## Installation
-
-```sh
-git clone https://github.com/fe15de/whatsapp_bot_films.git
-cd whatsapp_bot_films
+```
+├── api.py                        # Main entry point & API logic
+├── theaters_search/
+│   ├── theaters/
+│   │   ├── cinemark.py
+│   │   ├── cine_col.py
+│   │   ├── cinepolis.py
+│   │   └── royal_films.py
+│   └── dict_theaters.py          # City → theater chain mapping
+└── remove_duplicates/
+    └── remove_duplicates.py      # Fuzzy deduplication logic
 ```
 
-Create a virtual environment:
+## Getting Started
 
-```sh
-python3 -m venv venv
-source venv/bin/activate # Linux/Mac
-venv\Scripts\activate # Windows
-```
+### Prerequisites
 
-Install dependencies:
+- Python 3.10+
+- Google Chrome + ChromeDriver (for Selenium)
 
-```sh
+### Installation
+
+```bash
+git clone https://github.com/your-username/colombia-theater-api.git
+cd colombia-theater-api
+
+python -m venv env
+source env/bin/activate  # Windows: env\Scripts\activate
+
 pip install -r requirements.txt
 ```
 
-Configure your WhatsApp webhook to point to your server URL.
+### Usage
 
-Use WhatsApp commands to retrieve movies, theaters, and showtimes.
+```python
+from api import all_films, search_film
 
-## Endpoints
+# Get all films showing in Bogotá
+films = all_films('Bogotá')
+print(films)
 
-- `/movies` — returns movie listings
-- `/theaters` — returns available theaters
-- `/showtimes?theater_id={id}` — returns showtimes for a specific theater
+# Search showtimes for a specific film
+results = search_film('Michael', films, 'Bogotá')
+print(results)
+```
 
-## Contribution
+## Supported Cities
 
-1. Fork this repository
-2. Create a new branch (feature or bugfix)
-3. Make your changes
-4. Submit a Pull Request with a clear description
+Availability depends on which chains operate in each city. The `dict_theaters.py` file maps each city to its supported chains.
+
+## How It Works
+
+1. `all_films(city)` loops through every theater chain that operates in the given city, calls each chain's scraper, and merges the results into a single dictionary.
+2. `group_similar_films()` runs fuzzy matching across all film titles to collapse near-duplicate entries into one.
+3. `search_film(film_name, film, city)` queries each chain for showtimes at specific locations and returns formatted messages.
+
+## Contributing
+
+Pull requests are welcome. To add a new theater chain, create a new class under `theaters_search/theaters/` following the same interface as the existing scrapers, then register it in `dict_theaters.py` and `api.py`.
