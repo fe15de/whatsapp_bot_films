@@ -7,7 +7,7 @@
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Royal_Films_logo.svg/3840px-Royal_Films_logo.svg.png" width="20%" height="75">
 </p>
 
-A Python API that aggregates movie showtimes from all major Colombian cinema chains in real time. Search for what's playing in your city — across Cinemark, CineCol, Cinépolis, and Royal Films — without jumping between four different websites.
+A Python API that aggregates movie showtimes from all major Colombian cinema chains in real time. Search for what's playing in your city across Cinemark, Cine Colombia, Cinépolis, and Royal Films without jumping between four different websites.
 
 ## Features
 
@@ -19,11 +19,11 @@ A Python API that aggregates movie showtimes from all major Colombian cinema cha
 ## Tech Stack
 
 - **Python 3.14**
-- **FastAPI** — API framework
-- **Selenium** — browser automation for scraping dynamic pages
-- **BeautifulSoup4** — HTML parsing
-- **RapidFuzz** — fuzzy string matching for deduplication
-- **Uvicorn** — ASGI server
+- **FastAPI** - API framework
+- **Selenium, Playwright** - browser automation for scraping dynamic pages
+- **BeautifulSoup4** - HTML parsing
+- **RapidFuzz** - fuzzy string matching for deduplication
+- **Uvicorn** - ASGI server
 
 ## Project Structure
 
