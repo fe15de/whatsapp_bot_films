@@ -1,4 +1,4 @@
-# 🎬 Colombia Movie Theater API
+# Colombia Movie Theater API
 
 <p align="center"> 
   <img src="https://cms-api-multiplex.cinecolombia.com/media/xitcxtzb/logo-cc-blanco-01.png" width="20%" height="75">
