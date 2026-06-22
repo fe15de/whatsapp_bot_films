@@ -1,7 +1,7 @@
 # Colombia Movie Theater API
 
 <p align="center"> 
-  <img src="https://cms-api-multiplex.cinecolombia.com/media/xitcxtzb/logo-cc-blanco-01.png" width="20%" height="75">
+  <img src="https://cdn.brandfetch.io/idgInoHKhi/w/820/h/166/theme/light/logo.png?c=1dxbfHSJFAPEGdCLU4o5B" width="20%" height="75">
   <img src="https://www.cinemark.com.co/static/favicon/android-icon-192x192.svg" width="20%" height="75">
   <img src="https://static.cinepolis.com/img/logo-icons/icon-144x144.png" width="75" height="75">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Royal_Films_logo.svg/3840px-Royal_Films_logo.svg.png" width="20%" height="75">
@@ -45,13 +45,13 @@ A Python API that aggregates movie showtimes from all major Colombian cinema cha
 ### Prerequisites
 
 - Python 3.10+
-- Google Chrome + ChromeDriver (for Selenium)
+- firefox (for Selenium)
 
 ### Installation
 
 ```bash
-git clone https://github.com/your-username/colombia-theater-api.git
-cd colombia-theater-api
+git clone https://github.com/fe15de/whatsapp_bot_films.git
+cd whatsapp_bot_films
 
 python -m venv env
 source env/bin/activate  # Windows: env\Scripts\activate
