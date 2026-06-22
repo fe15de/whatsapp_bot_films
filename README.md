@@ -50,8 +50,8 @@ A Python API that aggregates movie showtimes from all major Colombian cinema cha
 ### Installation
 
 ```bash
-git clone https://github.com/fe15de/whatsapp_bot_films.git
-cd whatsapp_bot_films
+git clone https://github.com/fe15de/colombian_theaters_api.git
+cd colombian_theaters_api
 
 python -m venv env
 source env/bin/activate  # Windows: env\Scripts\activate
